@@ -1,11 +1,11 @@
 const projectsData = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Kodepatra',
+    description: `What if I could document and share what I've learned in programming to the world? Insights, best practice, projects
+    and more, through videos. 
+    Kodepatra is the platform to help me doing exactly that.`,
+    imgSrc: '/static/images/kodepatra.png',
+    href: 'https://www.youtube.com/@kodepatra',
   },
   {
     title: 'The Time Machine',
