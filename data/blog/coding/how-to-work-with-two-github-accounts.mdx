@@ -1,0 +1,187 @@
+---
+title: How to Work with Two Github Accounts in One Environment
+date: '2023-12-23'
+tags: ['coding']
+draft: false
+summary: 'In this article, you will learn how you can work with two github accounts within a same computer'
+# layout: Default
+---
+
+<TOCInline toc={props.toc} asDisclosure toHeading={3} />
+
+## Create SSH keys for all of your github accounts
+
+First of all, make sure you are on your `.ssh` folder:
+
+```
+  $ cd ~/.ssh
+```
+
+<div className="my-1 w-full overflow-hidden ">
+  ![cd ~/.ssh](/static/images/coding/github-1.png)
+  <div className="mb-8 grid place-items-center font-bold">Change Directory to /.ssh</div>
+</div>
+
+Then, you need to make SSH keys for your accounts. To generate a new SSH key for each GitHub account, open your terminal and run the following command, replacing `github-email@example.com` with the email address associated with your GitHub account:
+
+```
+  ssh-keygen -t ed25519 -C "github-email@example.com" -f "github-username"
+```
+
+-C stands for comment to help identify your ssh key
+
+-f stands for the file name where your ssh key get saved
+
+Or you can specify the filename later by inputting command:
+
+```
+  ssh-keygen -t ed25519 -C "github-email@example.com" -f "github-username"
+```
+
+..., and inputting a unique filename when prompted. In this case, I use github-username for my `filename`. For `passphrase`, you can choose whatever you want. In this case, I don't use any passphrase.
+
+<div className="my-1 w-full overflow-hidden ">
+  ![Creating SSH Key](/static/images/coding/github-2.png)
+  <div className="mb-8 grid place-items-center font-bold">Creating SSH Key</div>
+</div>
+
+Then, do the same thing for your other github account.
+
+<div className="my-1 w-full overflow-hidden ">
+  ![Creating SSH Key for Other Account](/static/images/coding/github-3.png)
+  <div className="mb-8 grid place-items-center font-bold">Creating SSH Key for Other Account</div>
+</div>
+
+## Adding SSH keys to SSH Agent
+
+After we created our SSH keys, we have to add them to the SSH Agent so it can be used.
+
+```
+     ssh-add ~/.ssh/filename1
+     ssh-add ~/.ssh/filename2
+```
+
+For me it is:
+
+```
+     ssh-add ~/.ssh/github-winaldomanurung
+     ssh-add ~/.ssh/github-kodepatra
+```
+
+<div className="my-1 w-full overflow-hidden ">
+  ![Adding SSH Key to SSH Agent](/static/images/coding/github-4.png)
+  <div className="mb-8 grid place-items-center font-bold">Adding SSH Key to SSH Agent</div>
+</div>
+
+## Adding SSH Public Key to the Github
+
+Next step is we need to add the public keys and add it to corresponding Github accounts.
+
+For this, we need to do two steps:
+
+### 1. Copy the public key
+
+We can do this by opening the .pub file using vim and copy the content of that file. This is the command for that:
+
+```
+  vim ~/.ssh/github-winaldomanurung.pub
+  vim ~/.ssh/github-kodepatra.pub
+
+```
+
+OR, if we use Mac, we can directly copy the content of the public key file in the clipboard.
+
+```
+     pbcopy < ~/.ssh/github-winaldomanurung.pub
+     pbcopy < ~/.ssh/github-kodepatra.pub
+```
+
+### 2. Paste the public key on Github
+
+- Sign in to Github Account
+- Goto Settings > SSH and GPG keys > New SSH Key
+- Paste your copied public key and give it a Title of your choice.
+
+Do this with both of your accounts.
+
+## Create a Config File and Make Host Entries
+
+The ~/.ssh/config file allows us specify many config options for SSH.
+
+If config file not already exists then create one (make sure you are in ~/.ssh directory)
+
+```
+     touch config
+```
+
+The commands below opens config in your default editor....Likely TextEdit, VS Code.
+
+```
+     open config
+```
+
+Now we need to add these lines to the file, each block corresponding to each account we created earlier.
+
+```
+     #github-winaldomanurung account
+     Host github.com-winaldomanurung
+          HostName github.com
+          User git
+          IdentityFile ~/.ssh/github-winaldomanurung
+
+     #kodepatra account
+     Host github.com-kodepatra
+          HostName github.com
+          User git
+          IdentityFile ~/.ssh/github-kodepatra
+
+```
+
+## Cloning GitHub repositories using different accounts
+
+So we are done with our setups and now its time to see it in action. We will clone a repository using one of the account we have added.
+
+Make a new project folder where you want to clone your repository and go to that directory from your terminal.
+
+For Example: I am making a repository on my personal github account and naming it GitLearn Now for cloning the repo use the below command:
+
+```
+    git clone git@github.com-{your-username}:{owner-user-name}/{the-repo-name}.git
+
+    [e.g.] git clone git@github.com-winaldomanurung:winaldomanurung/GitLearn.git
+```
+
+## Finally
+
+From now on, to ensure that our commits and pushes from each repository on the system uses the correct GitHub user — we will have to configure user.email and user.name in every repository freshly cloned or existing before.
+
+To do this use the following commands.
+
+```
+     git config user.email "github-email-1@gmail.com"
+     git config user.name "github-username-1"
+
+     git config user.email "github-email-2@gmail.com"
+     git config user.name "github-username-2"
+```
+
+Pick the correct pair for your repository accordingly.
+
+To push or pull to the correct account we need to add the remote origin to the project
+
+```
+
+     git remote add origin git@github.com-winaldomanurung:winaldomanurung
+
+     git remote add origin git@github.com-kodepatra:kodepatra
+```
+
+Now you can use:
+
+```
+     git push
+
+     git pull
+git remote add origin git@github.com:kodepatra/next-tutorial.git
+
+```
