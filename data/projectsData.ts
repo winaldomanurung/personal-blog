@@ -8,12 +8,10 @@ const projectsData = [
     href: 'https://www.youtube.com/@kodepatra',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
+    title: 'Coding Course',
+    description: `As a completely self-learner in this software development field, I know how hard is that to define what you should learn, what's the best source, what's the next step, etc. With this coding course, you can start learning to code in a more structured way.`,
+    imgSrc: '/static/images/coding-course.png',
+    href: '/blog/coding/kodepatra',
   },
 ]
 
