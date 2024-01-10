@@ -1,0 +1,61 @@
+---
+title: Data Fetching in Next.js
+date: '2024-09-01'
+tags: ['coding']
+draft: false
+summary: 'We will learn all of the possible ways to fetching data in Next.js.'
+# layout: Default
+---
+
+Data fetching is one of the most important aspect in the software development. Since I use Next.js a lot lately, it becomes important for me to know about the ins and outs of data fetching in this beautiful framework.
+So, basically there are four ways to fetch data in Next.js.
+
+- On the server, with `fetch`
+- On the server, with `third party libraries`
+- On the client, via `Route Handler`
+- On the client, with `third party libraries`
+
+## Fetching data on the server with `fetch`
+
+If you know web-development, then you might also know that there is a native fetch functionality in the Web API that could help you to fetch data. Next.js took this feature and bring it to the next level by adding `caching ` and `revalidationg` functionality. This is added by the ability to `memoize` fetch requests while rendering a React component tree, thanks to React.
+
+You can use `fetch` with `async/await`:
+
+- Server Components
+- Route Handlers
+- Server Actions
+
+```
+async function getData(){
+  const res = await fetch('https://yourapi.com/...')
+
+  if(!res.ok){
+    throw new Error('Failed to fetch data')
+  }
+  return res.json()
+}
+
+export default async function Page(){
+  const data = await getData()
+
+  return <main></main>
+}
+```
+
+### Caching
+
+Next.js automatically caches the returned values of `fetch` in the `Data Cache` on the server. It means that the data can be fetched either at build time or request time, cached, and then reused on each data request. This caching process is by default in Next.js.
+
+```
+// 'force-cache' is the default, and can be omitted
+fetch('https://...', { cache: 'force-cache' })
+```
+
+`fetch` requests with POST method are also cached automatically, unless it is inside a `Route Handler` that uses POST method.
+
+### Revalidating
+
+Revalidation is a process of purging the Data Cache and refetching the latest data.this is useful if your data changes a lot. It can be done in two ways:
+
+- Time-based: You revalidate data after certain amount of time has passed.
+- On-demand revalidation: You manually revalidate data based on an event that could be triggered at any time.
