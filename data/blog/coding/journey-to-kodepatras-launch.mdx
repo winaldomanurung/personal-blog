@@ -1,0 +1,34 @@
+---
+title: Journey to Kodepatra's Launch
+date: '2024-01-03'
+tags: ['coding']
+draft: false
+summary: 'I want to use this article as a log to my journey to launch Kodepatra LMS platform.'
+# layout: Default
+---
+
+# January, 3 2024
+
+Today, I bought a domain called kodepatra.com at a local domain provider. It costed me about IDR 170.000 for the domain. Now, I just need to deploy my web app to the internet and connecting my domain to the deployed app. For a little bit context and information, I don't really have the experience to deploy a big app since I mainly focus only on the development process.
+
+I have tried to deploy my project to Vercel, but I still need to host my database somewhere so I can test my app. There are several options to to this. First, I could try to host the database in a SaaS platform, such as AWS, GCP, or even things like DigitalOcean. The second option is to use a VPS and configure a database there. I've never have the experience with both of these methods, so I guess I will do some research for both.
+
+# January, 4 2024
+
+I am looking for the best platform to host my database. For your information, my database is configured with MySQL and Sequelize library, and I know that there are a lot of platforms that provide MySQL hosting services.
+
+I decided to consult with one of Indonesian coding Youtubers who has the experience, and he recommended me one platform named PlanetScale. I used this information and surfed through the Reddit forums to see the review about this platform, and turned out this is one of the best platform for database hosting (and it's mostly free). However, I found a problem that I need to host my database somewhere, before I could do migration process on PlanetScale. This is a really cumbersome thing to do.
+
+I decided to go with another free option, which is hosting my database using EC2 instance from AWS (Amazon Web Services), before I go with the migration process on PlanetScale. Today, I successfully deploy my first EC2 instance. The bad thing is that I still don't know how to use it to host my database.
+
+# January, 6 2024
+
+I found a specific video on Youtube about how to host MySQL database on EC2 instance. I followed it thoroughly and voila, now my database has been duplicated on my EC2 instance. So, basically, EC2 instance is like another computer which will always be available to do anything you want. I could basically copied everything I have inside my own laptop into this EC2 instance, and it will become my second, copied-version, of my laptop. Now, since I already have my database inside this second laptop, I can connect it to the website, which yet to be deployed.
+
+I started to deploy my website onto Vercel. But, wait. `500 Internal Server Error`. That's basically what I get everytime I try to access it. The problem is related to CORS. An issue that I've met back in the day when I first started to learn software development. But, back then, it is trivial since the backend and frontend that I made was using a different technology. I used React for frontend and ExpressJS for backend, that's why I need to configure the CORS headers. But, in my current case, I use NextJS, which means that I use the same technology for backend and frontend. Why do I need a specific configuration for the CORS? This doesn't make any sense.
+
+# January, 7 2024
+
+Finally, after two days of trials and errors, I completed the deployment of the site, as you can see at [Kodepatra website](https://kodepatra.com). It still has a lot of uncompleted things. The cart functionality is still broken, the database is still need to be updated, and there are a lot of testing that need to be done, especially for the payment gateway system. But, afterall, this has been an incredible journey to learn how to deploy a big project as a software developer. I still need to learn a lot, tho.
+
+Hope this could end well. 🙏
