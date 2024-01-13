@@ -92,5 +92,8 @@ module.exports = () => {
 
       return config
     },
+    env: {
+      PASSWORD: process.env.PASSWORD,
+    },
   })
 }
