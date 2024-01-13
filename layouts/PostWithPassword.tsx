@@ -11,6 +11,8 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import Password from '@/components/Password'
+import AlertError from '@/components/AlertError'
+import AlertSuccess from '@/components/AlertSuccess'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -21,20 +23,31 @@ interface LayoutProps {
 
 export default function PostWithPassword({ content, next, prev, children }: LayoutProps) {
   const { path, slug, date, title } = content
-  const [show, setShow] = useState(false)
+  const [showArticle, setShowArticle] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
   const getAccess = (password) => {
-    if (password === 'kocak') {
-      setShow(true)
+    if (password === process.env.PASSWORD) {
+      setShowArticle(true)
     } else {
-      alert('Password salah')
+      setShowAlert(true)
+      setTimeout(function () {
+        setShowAlert(false)
+      }, 4000)
     }
+  }
+
+  const dismissAlert = (status) => {
+    setShowAlert(status)
   }
 
   return (
     <SectionContainer>
       <ScrollTopAndComment />
-      {!show ? (
+      <div className={`transition-all duration-1000 ${showAlert ? 'opacity-100' : 'opacity-0'}`}>
+        {showAlert && <AlertError onDismissAlert={dismissAlert} />}
+      </div>
+      {!showArticle ? (
         <Password onSubmitPassword={getAccess} />
       ) : (
         <article>
